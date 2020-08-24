@@ -1,18 +1,18 @@
 var draw;
 
-SVG.on(document, 'DOMContentLoaded', function() {
-    draw = SVG().addTo('#drawing').size(500, 500)
+SVG.on(document, `DOMContentLoaded`, function() {
+    draw = SVG().addTo(`#drawing`).size(500, 500)
 })
 
-var input = document.querySelector('input[type=file]');
+var input = document.getElementById(`file`);
 var timeline = new SVG.Timeline();
 
 function start() {
     draw.clear();
     timeline.time(0);
-    var file = document.getElementById("file").files[0];
+    var file = document.getElementById(`file`).files[0];
     var reader = new FileReader();
-    reader.readAsText(file, 'UTF-8');
+    reader.readAsText(file, `UTF-8`);
     reader.onload = readerEvent => {
         var content = readerEvent.target.result;
         var json = JSON.parse(content);
@@ -80,7 +80,7 @@ function start() {
                 when: anim.when
             };
 
-            let runner = shapes[`${anim.shape}`].animate(anim.duration, anim.delay, "absolute");
+            let runner = shapes[`${anim.shape}`].animate(anim.duration, anim.delay, `absolute`);
 
             if (anim.x != undefined)
                 runner.x(anim.x)
