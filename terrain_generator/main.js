@@ -3,7 +3,7 @@ function lerp(start, end, t) {
 }
 
 function map(num, start_in, end_in, start_out, end_out) {
-    return (num - start_in) * (end_out - start_out) / (end_in - start_in) + start_out
+    return (num - start_in) * (end_out - start_out) / (end_in - start_in) + start_out;
 }
 
 var scale = 10;

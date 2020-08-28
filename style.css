@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+body {
+    font-family: 'Inconsolata';
+    font-size: 16px;
+    background-color: var(--bg_darker);
+    border: 1px solid var(--bg_darker);
+    color: var(--white);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+:root {
+    --white: #eeffff;
+    --bg_darkest: #23222c;
+    --bg_darker: #272531;
+    --bg_dark: #343242;
+    --bg_light: #413d50;
+    --bg_lighter: #4d495e;
+    --gray: #99aaaa;
+    --light_gray: #bbdddd;
+}
+
+a:link {
+    display: inline-block;
+    color: var(--white);
+    text-decoration: none;
+    background: var(--bg_lighter);
+    padding: 10px 10px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+a:visited {
+    color: var(--white);
+    text-decoration: none;
+    text-align: center;
+}
+
+#canvas {
+    display: inline-block;
+    background-color: var(--bg_darkest);
+    border-radius: 10px;
+    position: absolute;
+    left: 20px;
+    top: 80px;
+}
+
+.darker_link {
+    background: var(--bg_dark);
+}
+   
+#drawing {
+    display: inline-block;
+    background-color: var(--bg_darkest);
+    border-radius: 10px;
+    position: absolute;
+    left: 20px;
+    top: 150px;
+}
+
+.small_text {
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.top_box {
+    display: inline-block;
+    background-color: var(--bg_light);
+    border-radius: 10px;
+    padding: 10px 20px 10px 20px;
+    margin: 10px 10px 10px 10px;
+}
+
+.lower_box {
+    display: inline-block;
+    background-color: var(--bg_dark);
+    border-radius: 10px;
+    margin: 10px 10px 10px 10px;
+}
+
+.bottom_box {
+    display: inline-block;
+    background-color: var(--bg_darkest);
+    border-radius: 10px;
+    margin: 10px 10px 10px 10px;
+}
+
+.changelog_box {
+    display: block;
+    background-color: var(--bg_darkest);
+    border-radius: 10px;
+    margin: 10px 200px 10px 200px;
+    padding: 10px 20px 10px 20px;
+    box-sizing: border-box;
+}
+
+cb {
+    background: #00000033;
+    color: var(--light_gray);
+    margin: 2px 2px 2px 2px;
+    padding: 2px 2px 2px 2px;
+    border-radius: 5px;
+}
+
+#input {
+    background: #343242;
+    border-radius: 10px;
+    display: inline-block;
+    padding: 10px 10px 10px 10px;
+    position: absolute;
+    min-width: 600px;
+    right: 20px;
+    top: 80px;
+    line-height: 1.5em;
+}

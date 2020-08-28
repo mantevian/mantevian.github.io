@@ -7,52 +7,50 @@
     <title>terrain generator</title>
     <script type="text/javascript" src="https://raw.githack.com/josephg/noisejs/master/perlin.js"></script>
     <script type="text/javascript" src="../resources/biomes.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
-    <link rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
-    <div id="links">
-        <a href="../index.html">go back</a>
-    </div>
+    <p style="text-align: center; font-size: 32px; margin-top: 10px;">terrain gen</p>
     <canvas id="canvas" width="800" height="600"></canvas>
-
     <div id="input">
         Image Scale:
-        <input type="text" id="image_scale_textbox" size="40"><br>
+        <input type="text" id="image_scale_textbox" size="40" value="3"><br>
         Terrain Seed (0 for random):
-        <input type="text" id="seed_textbox" size="40"><br>
+        <input type="text" id="seed_textbox" size="40" value="0"><br>
         Biome Altitude Seed (0 for random):
-        <input type="text" id="biome_altitude_seed_textbox" size="40"><br>
+        <input type="text" id="biome_altitude_seed_textbox" size="40" value="0"><br>
         Biome Temperature Seed (0 for random):
-        <input type="text" id="biome_temperature_seed_textbox" size="40"><br>
+        <input type="text" id="biome_temperature_seed_textbox" size="40" value="0"><br>
         Biome Humitidy Seed (0 for random):
-        <input type="text" id="biome_humidity_seed_textbox" size="40"><br>
+        <input type="text" id="biome_humidity_seed_textbox" size="40" value="0"><br>
         Biome Weirdness Seed (0 for random):
-        <input type="text" id="biome_weirdness_seed_textbox" size="40"><br>
+        <input type="text" id="biome_weirdness_seed_textbox" size="40" value="0"><br>
         Terrain Scale:
-        <input type="text" id="scale_textbox" size="40"><br>
+        <input type="text" id="scale_textbox" size="40" value="10"><br>
         Altitude Scale:
-        <input type="text" id="altitude_scale_textbox" size="40"><br>
+        <input type="text" id="altitude_scale_textbox" size="40" value="20"><br>
         Temperature Scale:
-        <input type="text" id="temperature_scale_textbox" size="40"><br>
+        <input type="text" id="temperature_scale_textbox" size="40" value="20"><br>
         Humidity Scale:
-        <input type="text" id="humidity_scale_textbox" size="40"><br>
+        <input type="text" id="humidity_scale_textbox" size="40" value="20"><br>
         Weirdness Scale:
-        <input type="text" id="weirdness_scale_textbox" size="40"><br>
+        <input type="text" id="weirdness_scale_textbox" size="40" value="20"><br>
         Altitude Offset:
-        <input type="text" id="altitude_offset_textbox" size="40"><br>
+        <input type="text" id="altitude_offset_textbox" size="40" value="-0.5"><br>
         Temperature Offset:
-        <input type="text" id="temperature_offset_textbox" size="40"><br>
+        <input type="text" id="temperature_offset_textbox" size="40" value="0"><br>
         Humidity Offset:
-        <input type="text" id="humidity_offset_textbox" size="40"><br>
+        <input type="text" id="humidity_offset_textbox" size="40" value="0"><br>
         Weirdness Offset:
-        <input type="text" id="weirdness_offset_textbox" size="40"><br>
+        <input type="text" id="weirdness_offset_textbox" size="40" value="0"><br>
 
         <button id="button" onclick="generate()">
             Generate
         </button>
     </div>
+    <a class="top_box" style="position: absolute; top: 10px; left: 10px;" href="../index.html">go back</a>
 </body>
 
 </html>
