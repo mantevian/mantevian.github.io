@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <title>terrain generator</title>
     <script type="text/javascript" src="https://raw.githack.com/josephg/noisejs/master/perlin.js"></script>
+    <script type="text/javascript" src="../resources/biomes.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -21,8 +22,8 @@
         <input type="text" id="image_scale_textbox" size="40"><br>
         Terrain Seed (0 for random):
         <input type="text" id="seed_textbox" size="40"><br>
-        Biome Height Seed (0 for random):
-        <input type="text" id="biome_height_seed_textbox" size="40"><br>
+        Biome Altitude Seed (0 for random):
+        <input type="text" id="biome_altitude_seed_textbox" size="40"><br>
         Biome Temperature Seed (0 for random):
         <input type="text" id="biome_temperature_seed_textbox" size="40"><br>
         Biome Humitidy Seed (0 for random):
@@ -31,14 +32,22 @@
         <input type="text" id="biome_weirdness_seed_textbox" size="40"><br>
         Terrain Scale:
         <input type="text" id="scale_textbox" size="40"><br>
-        Height Scale:
-        <input type="text" id="height_scale_textbox" size="40"><br>
+        Altitude Scale:
+        <input type="text" id="altitude_scale_textbox" size="40"><br>
         Temperature Scale:
         <input type="text" id="temperature_scale_textbox" size="40"><br>
         Humidity Scale:
         <input type="text" id="humidity_scale_textbox" size="40"><br>
         Weirdness Scale:
         <input type="text" id="weirdness_scale_textbox" size="40"><br>
+        Altitude Offset:
+        <input type="text" id="altitude_offset_textbox" size="40"><br>
+        Temperature Offset:
+        <input type="text" id="temperature_offset_textbox" size="40"><br>
+        Humidity Offset:
+        <input type="text" id="humidity_offset_textbox" size="40"><br>
+        Weirdness Offset:
+        <input type="text" id="weirdness_offset_textbox" size="40"><br>
 
         <button id="button" onclick="generate()">
             Generate
