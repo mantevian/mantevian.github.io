@@ -15,6 +15,7 @@ const biomes = [
         altitude: 3,
         height: 0.5,
         temperature: 0.5,
+        humidity: 0.3,
         weirdness: 0.0,
         default_layer: "#3333cc",
         layers: [
@@ -48,6 +49,7 @@ const biomes = [
         altitude: 4,
         height: 0.8,
         temperature: 0.4,
+        humidity: 0.5,
         weirdness: 0.1,
         default_layer: "#3333cc",
         layers: [
@@ -81,6 +83,7 @@ const biomes = [
         altitude: 6,
         height: 0.9,
         temperature: 0.5,
+        humidity: 0.8,
         weirdness: 0.4,
         default_layer: "#3333cc",
         layers: [
@@ -108,12 +111,47 @@ const biomes = [
     },
     {
         id: 3,
+        name: "jungle",
+        color: "44ff44",
+        scale: 1,
+        altitude: 6,
+        height: 0.7,
+        temperature: 0.8,
+        humidity: 1.0,
+        weirdness: 0.3,
+        default_layer: "#3333cc",
+        layers: [
+            {
+                color: "#4444ff",
+                height: -1
+            },
+            {
+                color: "#ccdd55",
+                height: -0.5
+            },
+            {
+                color: "#44aa33",
+                height: 0
+            },
+            {
+                color: "#44dd22",
+                height: 2
+            },
+            {
+                color: "#44ff22",
+                height: 4
+            }
+        ]
+    },
+    {
+        id: 10,
         name: "desert",
         color: "ffff33",
         scale: 1,
         altitude: 3,
         height: 0.5,
         temperature: 1.0,
+        humidity: 0.05,
         weirdness: 0.0,
         default_layer: "#3333cc",
         layers: [
@@ -136,13 +174,14 @@ const biomes = [
         ]
     },
     {
-        id: 4,
+        id: 20,
         name: "mountains",
         color: "ffff33",
         scale: 1,
         altitude: 10,
         height: 2.5,
         temperature: -0.1,
+        humidity: 0.3,
         weirdness: 0.0,
         default_layer: "#3333cc",
         layers: [
@@ -165,13 +204,14 @@ const biomes = [
         ]
     },
     {
-        id: 5,
+        id: 30,
         name: "taiga",
         color: "ffff33",
         scale: 1,
         altitude: 5,
         height: 0.5,
         temperature: -0.9,
+        humidity: 0.2,
         weirdness: 0.0,
         default_layer: "#3333cc",
         layers: [
@@ -194,13 +234,14 @@ const biomes = [
         ]
     },
     {
-        id: 6,
+        id: 11,
         name: "mesa",
         color: "ff9922",
         scale: 1,
         altitude: 6,
         height: 0.6,
         temperature: 2.0,
+        humidity: 0.01,
         weirdness: 1.0,
         default_layer: "#3333cc",
         layers: [
@@ -223,13 +264,14 @@ const biomes = [
         ]
     },
     {
-        id: 7,
+        id: 31,
         name: "ice",
         color: "ffff33",
         scale: 1,
         altitude: 7,
         height: 0.5,
         temperature: -1.1,
+        humidity: 0.6,
         weirdness: 0.5,
         default_layer: "#3333cc",
         layers: [
@@ -252,13 +294,14 @@ const biomes = [
         ]
     },
     {
-        id: 8,
+        id: 40,
         name: "ocean",
         color: "#3333ff",
         scale: 1,
         altitude: -6,
         height: -0.5,
         temperature: 0.1,
+        humidity: 0.8,
         weirdness: 0.0,
         default_layer: "#2222aa",
         layers: [
@@ -277,13 +320,14 @@ const biomes = [
         ]
     },
     {
-        id: 9,
+        id: 41,
         name: "cold_ocean",
         color: "#8888ff",
         scale: 1,
         altitude: -7,
         height: -1,
         temperature: -0.5,
+        humidity: 0.6,
         weirdness: 0.0,
         default_layer: "#4444aa",
         layers: [
@@ -302,13 +346,14 @@ const biomes = [
         ]
     },
     {
-        id: 10,
+        id: 42,
         name: "warm_ocean",
         color: "#2244ff",
         scale: 1,
         altitude: -5,
         height: -0.5,
         temperature: 0.9,
+        humidity: 1.0,
         weirdness: 0.0,
         default_layer: "#2244aa",
         layers: [
@@ -328,20 +373,54 @@ const biomes = [
     }
 ]
 
-function draw() {
+var scale = 10;
+var image_scale = 10;
+var temperature_scale = 30;
+var height_scale = 20;
+var humidity_scale = 20;
+var weirdness_scale = 50;
+
+var seed = Math.random() * 65536 % 65536;
+var biome_height_seed = Math.random() * 65536 % 65536;
+var biome_temperature_seed = Math.random() * 65536 % 65536;
+var biome_humidity_seed = Math.random() * 65536 % 65536;
+var biome_weirdness_seed = Math.random() * 65536 % 65536;
+
+function generate() {
+    seed = document.getElementById(`seed_textbox`).value;
+    biome_height_seed = document.getElementById(`biome_height_seed_textbox`).value;
+    biome_temperature_seed = document.getElementById(`biome_temperature_seed_textbox`).value;
+    biome_humidity_seed = document.getElementById(`biome_humidity_seed_textbox`).value;
+    biome_weirdness_seed = document.getElementById(`biome_weirdness_seed_textbox`).value;
+
+    if (seed == 0)
+        seed = Math.random() * 65536 % 65536;
+
+    if (biome_height_seed == 0)
+        biome_height_seed = Math.random() * 65536 % 65536;
+
+    if (biome_temperature_seed == 0)
+        biome_temperature_seed = Math.random() * 65536 % 65536;
+
+    if (biome_humidity_seed == 0)
+        biome_humidity_seed = Math.random() * 65536 % 65536;
+
+    if (biome_weirdness_seed == 0)
+        biome_weirdness_seed = Math.random() * 65536 % 65536;
+
+    scale = document.getElementById(`scale_textbox`).value;
+    image_scale = document.getElementById(`image_scale_textbox`).value;
+    temperature_scale = document.getElementById(`temperature_scale_textbox`).value;
+    humidity_scale = document.getElementById(`humidity_scale_textbox`).value;
+    height_scale = document.getElementById(`height_scale_textbox`).value;
+    weirdness_scale = document.getElementById(`weirdness_scale_textbox`).value;
+
+
     var canvas = document.getElementById('canvas');
-    const scale = 10;
-    const image_scale = 1;
-    const temperature_scale = 30;
-    const height_scale = 20;
-    const weirdness_scale = 50;
     var heightmap = [];
     var biomemap = [[]];
     var biomelist = {};
-    const seed = Math.random() * 65536 % 65536;
-    const biome_height_seed = Math.random() * 65536 % 65536;
-    const biome_temperature_seed = Math.random() * 65536 % 65536;
-    const biome_weirdness_seed = Math.random() * 65536 % 65536;
+
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
 
@@ -375,6 +454,14 @@ function draw() {
                 biomemap[h][1] += noise.simplex2(x / 4 / temperature_scale + 100000, z / 4 / temperature_scale + 100000);
                 biomemap[h][1] += noise.simplex2(x / 2 / temperature_scale + 1000000, z / 2 / temperature_scale + 1000000);
 
+                noise.seed(biome_humidity_seed)
+                if (biomemap[h] == undefined || !biomemap[h][1] || biomemap[h] == NaN)
+                    biomemap[h][1] = noise.simplex2(x / 10 / humidity_scale, z / 10 / humidity_scale);
+                biomemap[h][1] += noise.simplex2(x / 8 / humidity_scale + 1000, z / 8 / humidity_scale + 1000);
+                biomemap[h][1] += noise.simplex2(x / 6 / humidity_scale + 10000, z / 6 / humidity_scale + 10000);
+                biomemap[h][1] += noise.simplex2(x / 4 / humidity_scale + 100000, z / 4 / humidity_scale + 100000);
+                biomemap[h][1] += noise.simplex2(x / 2 / humidity_scale + 1000000, z / 2 / humidity_scale + 1000000);
+
                 noise.seed(biome_weirdness_seed)
                 if (biomemap[h] == undefined || !biomemap[h][2] || biomemap[h] == NaN)
                     biomemap[h][2] = noise.simplex2(x / 100 / weirdness_scale, z / 100 / weirdness_scale);
@@ -385,23 +472,24 @@ function draw() {
             }
         }
 
-        console.log(biomemap)
-
         var biomeidmap = [];
         for (var i = 0; i < biomemap.length; i++) {
             var height_difference = 0;
             var min_height_difference = 65535;
             var temperature_difference = 0;
             var min_temperature_difference = 65535;
+            var humidity_difference = 0;
+            var min_humidity_difference = 65535;
             var weirdness_difference = 0;
             var min_weirdness_difference = 65535;
 
             for (var b = 0; b < biomes.length; b++) {
                 height_difference = Math.abs(biomemap[i][0] - biomes[b].height);
                 temperature_difference = Math.abs(biomemap[i][1] - biomes[b].temperature);
+                humidity_difference = Math.abs(biomemap[i][1] - biomes[b].humidity);
                 weirdness_difference = Math.abs(biomemap[i][2] - biomes[b].weirdness);
 
-                if (temperature_difference + height_difference + weirdness_difference < min_temperature_difference + min_height_difference + min_weirdness_difference)
+                if (temperature_difference + height_difference + humidity_difference + weirdness_difference < min_temperature_difference + min_humidity_difference + min_height_difference + min_weirdness_difference)
                     biomeidmap[i] = biomes[b].id;
 
                 if (height_difference < min_height_difference)
@@ -410,12 +498,13 @@ function draw() {
                 if (temperature_difference < min_temperature_difference)
                     min_temperature_difference = temperature_difference;
 
+                if (humidity_difference < min_humidity_difference)
+                    min_humidity_difference = humidity_difference;
+
                 if (weirdness_difference < min_weirdness_difference)
                     min_weirdness_difference = weirdness_difference;
             }
         }
-
-        console.log(biomeidmap)
 
         for (var i = 0; i < heightmap.length; i++) {
             var biome = biomes.find(b => b.id == biomeidmap[i]);
@@ -434,7 +523,5 @@ function draw() {
             ctx.fillStyle = color;
             ctx.fillRect(x * image_scale, z * image_scale, image_scale, image_scale);
         }
-
-        console.log(JSON.stringify(biomelist))
     }
 }
