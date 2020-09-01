@@ -7,32 +7,49 @@
 </head>
 
 <body style="line-height: 1.4em;">
-    <div id="links">
-        <a href="index.html">go back</a>
-    </div>
+    <a class="top_box go_back_button" href="index.html">go back</a>
     <h1 style="text-align: center;">changelog</h1>
-    <h2 style="text-align: center;">0.1</h2>
-    <p class="changelog_box">
-        - added <cb>shape_thingy</cb><br>
-        - added <cb>terrain_generator</cb><br>
-        - added changelog (lol)<br>
-    </p>
-    <h3 style="text-align: center;">0.1.1</h3>
-    <p class="changelog_box">
-        - separated the biomes: now in <cb>/resources/biomes.js</cb><br>
-        - added offset options to control general altitude, temperature, humidity and weirdness throughout the whole map<br>
-        - added <cb>frozen ocean</cb>, <cb>deep ocean</cb> and <cb>deep warm ocean</cb> biomes<br>
-        - adjusted a lot of biome values<br>
-        - fixed a lot of biomes just never appearing<br>
-    </p>
-    <h2 style="text-align: center;">0.2</h2>
-    <p class="changelog_box">
+    <h2 style="text-align: center;">0.3 <st>01/09/2020</st>
+    </h2>
+    <p class="info_box">
+        - added squid<br>
+        - added <cb>octaves</cb> in terrain gen. each octave adds some more small detail. previously this was hardcoded
+        to be 4 but now can be set to anything from 1 to 12. more octaves = higher loading time<br>
+        - all values in terrain gen are auto prefilled but if one of the fields happens to be empty the generator will
+        use the default setting for it without crashing<br>
+        - changelog now goes from new to old instead of old to new otherwise you'd have to scroll down to hell to find
+        the newest update<br>
+        - changed text colors a bit<br>
+    </p><br>
+
+    <h2 style="text-align: center;">0.2 <st>28/08/2020</st>
+    </h2>
+    <p class="info_box">
         - moved a lot of files<br>
         - unified css for all pages, moved into <cb>/style.css</cb><br>
         - redesigned the main page and this changelog page<br>
         - terraingen now has default values put in the textboxes so you don't have to type them in every time<br>
         - added <cb>these cool text boxes</cb><br>
-    </p>
+    </p><br>
+
+    <h3 style="text-align: center;">0.1.1 <st>28/08/2020</st>
+    </h3>
+    <p class="info_box">
+        - separated the biomes: now in <cb>/resources/biomes.js</cb><br>
+        - added offset options to control general altitude, temperature, humidity and weirdness throughout the whole
+        map<br>
+        - added <cb>frozen ocean</cb>, <cb>deep ocean</cb> and <cb>deep warm ocean</cb> biomes<br>
+        - adjusted a lot of biome values<br>
+        - fixed a lot of biomes just never appearing<br>
+    </p><br>
+
+    <h2 style="text-align: center;">0.1 <st>28/08/2020</st>
+    </h2>
+    <p class="info_box">
+        - added <cb>shape_thingy</cb><br>
+        - added <cb>terrain_generator</cb><br>
+        - added changelog (lol)<br>
+    </p><br>
 </body>
 
 </html>

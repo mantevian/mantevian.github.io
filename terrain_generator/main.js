@@ -6,30 +6,34 @@ function map(num, start_in, end_in, start_out, end_out) {
     return (num - start_in) * (end_out - start_out) / (end_in - start_in) + start_out;
 }
 
-var scale = 10;
-var image_scale = 10;
-var temperature_scale = 30;
-var altitude_scale = 20;
-var humidity_scale = 20;
-var weirdness_scale = 50;
+function get_element_value_or_default(id, def) {
+    if (document.getElementById(id).value)
+        return document.getElementById(id).value;
+    else return def;
+}
 
-var temperature_offset = 0;
-var altitude_offset = 0;
-var humidity_offset = 0;
-var weirdness_offset = 0;
-
-var seed = Math.random() * 65536 % 65536;
-var biome_altitude_seed = Math.random() * 65536 % 65536;
-var biome_temperature_seed = Math.random() * 65536 % 65536;
-var biome_humidity_seed = Math.random() * 65536 % 65536;
-var biome_weirdness_seed = Math.random() * 65536 % 65536;
+var scale, image_scale, altitude_scale, temperature_scale, humidity_scale, weirdness_scale,
+    altitude_offset, temperature_offset, humidity_offset, weirdness_offset,
+    seed, biome_altitude_seed, biome_temperature_seed, biome_humidity_seed, biome_weirdness_seed,
+    octaves;
 
 function generate() {
-    seed = document.getElementById(`seed_textbox`).value;
-    biome_altitude_seed = document.getElementById(`biome_altitude_seed_textbox`).value;
-    biome_temperature_seed = document.getElementById(`biome_temperature_seed_textbox`).value;
-    biome_humidity_seed = document.getElementById(`biome_humidity_seed_textbox`).value;
-    biome_weirdness_seed = document.getElementById(`biome_weirdness_seed_textbox`).value;
+    seed = parseInt(get_element_value_or_default(`seed_textbox`, 0));
+    biome_altitude_seed = parseInt(get_element_value_or_default(`biome_altitude_seed_textbox`, 0));
+    biome_temperature_seed = parseInt(get_element_value_or_default(`biome_temperature_seed_textbox`, 0));
+    biome_humidity_seed = parseInt(get_element_value_or_default(`biome_humidity_seed_textbox`, 0));
+    biome_weirdness_seed = parseInt(get_element_value_or_default(`biome_weirdness_seed_textbox`, 0));
+    octaves = parseInt(get_element_value_or_default(`octaves_textbox`, 2));
+    scale = parseFloat(get_element_value_or_default(`scale_textbox`, 10));
+    image_scale = parseInt(get_element_value_or_default(`image_scale_textbox`, 2));
+    temperature_scale = parseFloat(get_element_value_or_default(`temperature_scale_textbox`, 20));
+    humidity_scale = parseFloat(get_element_value_or_default(`humidity_scale_textbox`, 20));
+    altitude_scale = parseFloat(get_element_value_or_default(`altitude_scale_textbox`, 20));
+    weirdness_scale = parseFloat(get_element_value_or_default(`weirdness_scale_textbox`, 20));
+    temperature_offset = parseFloat(get_element_value_or_default(`temperature_offset_textbox`, -0.5));
+    humidity_offset = parseFloat(get_element_value_or_default(`humidity_offset_textbox`, 0));
+    altitude_offset = parseFloat(get_element_value_or_default(`altitude_offset_textbox`, 0));
+    weirdness_offset = parseFloat(get_element_value_or_default(`weirdness_offset_textbox`, 0));
 
     if (seed == 0)
         seed = Math.random() * 65536 % 65536;
@@ -46,22 +50,9 @@ function generate() {
     if (biome_weirdness_seed == 0)
         biome_weirdness_seed = Math.random() * 65536 % 65536;
 
-    scale = document.getElementById(`scale_textbox`).value;
-    image_scale = document.getElementById(`image_scale_textbox`).value;
-    temperature_scale = document.getElementById(`temperature_scale_textbox`).value;
-    humidity_scale = document.getElementById(`humidity_scale_textbox`).value;
-    altitude_scale = document.getElementById(`altitude_scale_textbox`).value;
-    weirdness_scale = document.getElementById(`weirdness_scale_textbox`).value;
-
-    temperature_offset = document.getElementById(`temperature_offset_textbox`).value;
-    humidity_offset = document.getElementById(`humidity_offset_textbox`).value;
-    altitude_offset = document.getElementById(`altitude_offset_textbox`).value;
-    weirdness_offset = document.getElementById(`weirdness_offset_textbox`).value;
-
     var canvas = document.getElementById('canvas');
     var heightmap = [];
     var biomemap = [[]];
-    var biomelist = {};
 
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d');
@@ -72,57 +63,49 @@ function generate() {
                 noise.seed(seed);
                 if (!heightmap[h] || heightmap[h] == NaN)
                     heightmap[h] = noise.simplex2(x / 10 / scale, z / 10 / scale);
-                heightmap[h] += noise.simplex2(x / 8 / scale + 1000, z / 8 / scale + 1000);
-                heightmap[h] += noise.simplex2(x / 6 / scale + 10000, z / 6 / scale + 10000);
-                heightmap[h] += noise.simplex2(x / 4 / scale + 100000, z / 4 / scale + 100000);
-                heightmap[h] += noise.simplex2(x / 2 / scale + 1000000, z / 2 / scale + 1000000);
 
-                noise.seed(biome_altitude_seed)
+                for (var i = 1; i <= octaves; i++)
+                    heightmap[h] += noise.simplex2(x / (2 * i) / scale + Math.pow(10, i + 3), z / (2 * i) / scale + Math.pow(10, i + 3));
+
+                noise.seed(biome_altitude_seed);
                 if (biomemap[h] == undefined || !biomemap[h][0] || biomemap[h] == NaN) {
                     biomemap[h] = [];
                     biomemap[h][0] = noise.simplex2(x / 10 / altitude_scale, z / 10 / altitude_scale);
                 }
 
-                biomemap[h][0] += noise.simplex2(x / 8 / altitude_scale + 1000, z / 8 / altitude_scale + 1000);
-                biomemap[h][0] += noise.simplex2(x / 6 / altitude_scale + 10000, z / 6 / altitude_scale + 10000);
-                biomemap[h][0] += noise.simplex2(x / 4 / altitude_scale + 100000, z / 4 / altitude_scale + 100000);
-                biomemap[h][0] += noise.simplex2(x / 2 / altitude_scale + 1000000, z / 2 / altitude_scale + 1000000);
+                for (var i = 1; i <= octaves; i++) {}
+                    biomemap[h][0] += noise.simplex2(x / (2 * i) / altitude_scale + Math.pow(10, i + 3), z / (2 * i) / altitude_scale + Math.pow(10, i + 3));
 
-                biomemap[h][0] += parseFloat(altitude_offset);
+                biomemap[h][0] += altitude_offset;
 
-                noise.seed(biome_temperature_seed)
+                noise.seed(biome_temperature_seed);
                 if (biomemap[h] == undefined || !biomemap[h][1] || biomemap[h] == NaN)
                     biomemap[h][1] = noise.simplex2(x / 10 / temperature_scale, z / 10 / temperature_scale);
-                biomemap[h][1] += noise.simplex2(x / 8 / temperature_scale + 1000, z / 8 / temperature_scale + 1000);
-                biomemap[h][1] += noise.simplex2(x / 6 / temperature_scale + 10000, z / 6 / temperature_scale + 10000);
-                biomemap[h][1] += noise.simplex2(x / 4 / temperature_scale + 100000, z / 4 / temperature_scale + 100000);
-                biomemap[h][1] += noise.simplex2(x / 2 / temperature_scale + 1000000, z / 2 / temperature_scale + 1000000);
 
-                biomemap[h][1] += parseFloat(temperature_offset);
+                for (var i = 1; i <= octaves; i++)
+                    biomemap[h][1] += noise.simplex2(x / (2 * i) / temperature_scale + Math.pow(10, i + 3), z / (2 * i) / temperature_scale + Math.pow(10, i + 3));
 
-                noise.seed(biome_humidity_seed)
+                biomemap[h][1] += temperature_offset;
+
+                noise.seed(biome_humidity_seed);
                 if (biomemap[h] == undefined || !biomemap[h][2] || biomemap[h] == NaN)
                     biomemap[h][2] = noise.simplex2(x / 10 / humidity_scale, z / 10 / humidity_scale);
-                biomemap[h][2] += noise.simplex2(x / 8 / humidity_scale + 1000, z / 8 / humidity_scale + 1000);
-                biomemap[h][2] += noise.simplex2(x / 6 / humidity_scale + 10000, z / 6 / humidity_scale + 10000);
-                biomemap[h][2] += noise.simplex2(x / 4 / humidity_scale + 100000, z / 4 / humidity_scale + 100000);
-                biomemap[h][2] += noise.simplex2(x / 2 / humidity_scale + 1000000, z / 2 / humidity_scale + 1000000);
 
-                biomemap[h][2] += parseFloat(humidity_offset);
+                for (var i = 1; i <= octaves; i++)
+                    biomemap[h][2] += noise.simplex2(x / (2 * i) / humidity_scale + Math.pow(10, i + 3), z / (2 * i) / humidity_scale + Math.pow(10, i + 3));
 
-                noise.seed(biome_weirdness_seed)
+                biomemap[h][2] += humidity_offset;
+
+                noise.seed(biome_weirdness_seed);
                 if (biomemap[h] == undefined || !biomemap[h][3] || biomemap[h] == NaN)
                     biomemap[h][3] = noise.simplex2(x / 100 / weirdness_scale, z / 100 / weirdness_scale);
-                biomemap[h][3] += noise.simplex2(x / 80 / weirdness_scale + 1000, z / 80 / weirdness_scale + 1000);
-                biomemap[h][3] += noise.simplex2(x / 60 / weirdness_scale + 10000, z / 60 / weirdness_scale + 10000);
-                biomemap[h][3] += noise.simplex2(x / 40 / weirdness_scale + 100000, z / 40 / weirdness_scale + 100000);
-                biomemap[h][3] += noise.simplex2(x / 20 / weirdness_scale + 1000000, z / 20 / weirdness_scale + 1000000);
 
-                biomemap[h][3] += parseFloat(weirdness_offset);
+                for (var i = 1; i <= octaves; i++)
+                    biomemap[h][0] += noise.simplex2(x / (2 * i) / weirdness_scale + Math.pow(10, i + 3), z / (2 * i) / weirdness_scale + Math.pow(10, i + 3));
+
+                biomemap[h][3] += weirdness_offset;
             }
         }
-
-        console.log(biomemap)
 
         var biomeidmap = [];
         for (var i = 0; i < biomemap.length; i++) {
@@ -158,7 +141,7 @@ function generate() {
 
             }
         }
-
+console.log(biomemap)
         for (var i = 0; i < heightmap.length; i++) {
             var biome = biomes.find(b => b.id == biomeidmap[i]);
 
