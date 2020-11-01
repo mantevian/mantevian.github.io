@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="X-Content-Type-Options" content="nosniff">
+    <meta charset="utf-8" />
+    <title>physics simulation</title>
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <p style="text-align: center; font-size: 32px; margin-top: 10px;">physics simulation</p>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div id="input">
+        <button id="button" onclick="start()">
+            Start
+        </button>
+        <br>
+        Ground Level:
+        <input type="text" id="ground_level_textbox" size="40" value="100"><br>
+        Object Mass:
+        <input type="text" id="object_mass_textbox" size="40" value="0.5"><br>
+        Gravitational Acceleration:
+        <input type="text" id="g_textbox" size="40" value="1"><br>
+        <br>
+        Push the object by:
+        <input type="text" id="push_value_textbox" size="40" value="10"><br>
+        ... Rotated:
+        <input type="text" id="push_angle_textbox" size="40" value="180"><br>
+
+        <button id="button" onclick="push()">
+            Push!
+        </button>
+        <br><br>
+
+        Tick Rate:
+        <input type="text" id="tickrate_textbox" size="40" value="20">
+        <p id="tick_count"></p>
+    </div>
+    <a class="top_box go_back_button" href="../index.html">go back</a>
+</body>
+
+</html>

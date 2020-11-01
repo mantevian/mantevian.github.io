@@ -17,6 +17,8 @@ var scale, image_scale, altitude_scale, temperature_scale, humidity_scale, weird
     seed, biome_altitude_seed, biome_temperature_seed, biome_humidity_seed, biome_weirdness_seed,
     octaves;
 
+var a = new Array(1)
+
 function generate() {
     seed = parseInt(get_element_value_or_default(`seed_textbox`, 0));
     biome_altitude_seed = parseInt(get_element_value_or_default(`biome_altitude_seed_textbox`, 0));
@@ -141,7 +143,7 @@ function generate() {
 
             }
         }
-console.log(biomemap)
+
         for (var i = 0; i < heightmap.length; i++) {
             var biome = biomes.find(b => b.id == biomeidmap[i]);
 
