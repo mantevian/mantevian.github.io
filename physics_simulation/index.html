@@ -20,16 +20,18 @@
         Ground Level:
         <input type="text" id="ground_level_textbox" size="40" value="100"><br>
         Object Mass:
-        <input type="text" id="object_mass_textbox" size="40" value="0.5"><br>
+        <input type="text" id="object_mass_textbox" size="40" value="2"><br>
         Gravitational Acceleration:
         <input type="text" id="g_textbox" size="40" value="1"><br>
+        Coefficient of Friction
+        <input type="text" id="friction_textbox" size="40" value="0.2"><br>
         <br>
         Push the object by:
         <input type="text" id="push_value_textbox" size="40" value="10"><br>
         ... Rotated:
         <input type="text" id="push_angle_textbox" size="40" value="180"><br>
 
-        <button id="button" onclick="push()">
+        <button id="button" onclick="apply_force_user()">
             Push!
         </button>
         <br><br>

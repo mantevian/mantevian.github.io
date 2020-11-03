@@ -4,7 +4,7 @@ function get_element_value_or_default(id, def) {
     else return def;
 }
 
-var canvas, ctx, ground_level, g, push_value, push_angle, timer, ticks, tickrate;
+var canvas, ctx, ground_level, g, push_value, push_angle, timer, ticks, tickrate, timeout;
 
 var object = {
     mass: 0,
@@ -20,28 +20,39 @@ var object = {
         x: 0,
         y: 0,
     },
+    energy: {
+        kinetic: 0,
+        potential: 0
+    },
     forces: [],
     on_ground: true
 }
 
 function start() {
+    clearTimeout(timeout);
     ticks = 0;
-    object.position.x = 400;
-    object.position.y = 100;
-    object.velocity.x = 0;
-    object.velocity.y = 0;
-    object.acceleration.x = 0;
-    object.acceleration.y = 0;
-    object.forces = [];
-    object.on_ground = false;
-    object.mass = parseFloat(get_element_value_or_default(`ground_level_textbox`, 0.5));
-
-    object.forces = [{
-        name: "g",
-        x: 0,
-        y: g * object.mass,
-        time: -1
-    }];
+    object = {
+        mass: 0,
+        position: {
+            x: 4000,
+            y: 1000
+        },
+        velocity: {
+            x: 0,
+            y: 0
+        },
+        acceleration: {
+            x: 0,
+            y: 0,
+        },
+        energy: {
+            kinetic: 0,
+            potential: 0
+        },
+        forces: [],
+        on_ground: true
+    }
+    object.mass = parseFloat(get_element_value_or_default(`object_mass_textbox`, 2));
 
     loop();
 }
@@ -52,33 +63,37 @@ function loop() {
     g = parseFloat(get_element_value_or_default(`g_textbox`, 1));
     push_value = parseFloat(get_element_value_or_default(`push_value_textbox`, -500));
     push_angle = parseFloat(get_element_value_or_default(`push_angle_textbox`, 180));
-    object.mass = parseFloat(get_element_value_or_default(`ground_level_textbox`, 0.5));
+    object.mass = parseFloat(get_element_value_or_default(`object_mass_textbox`, 2));
     tickrate = parseInt(get_element_value_or_default(`tickrate_textbox`, 20));
 
-    object.forces[0] = {
-        name: "g",
-        x: 0,
-        y: g * object.mass,
-        time: -1
-    };
+    console.log(`m ` + object.mass)
+    console.log(`g ` + g * object.mass)
+    apply_force(`g`, 0, g * object.mass, 1);
 
     canvas = document.getElementById('canvas');
     if (canvas.getContext) {
         ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, 1000, 1000);
 
-        if (object.position.y > canvas.height - ground_level) {
+        object.energy.kinetic = object.mass * Math.sqrt(object.velocity.x * object.velocity.x + object.velocity.y * object.velocity.y) / 2;
+        object.energy.potential = object.mass * g * (canvas.height - ground_level - object.position.y / 10);
+
+        if (object.position.y / 10 > canvas.height - ground_level - 5)
             object.on_ground = true;
-            object.position.y = canvas.height - ground_level;
-            object.acceleration.y = 0;
+        else
+            object.on_ground = false;
+
+        if (object.on_ground) {
+            object.position.y = (canvas.height - ground_level - 5) * 10;
             object.velocity.y = 0;
+            apply_force(`n`, 0, -Math.sqrt(2 * g * object.acceleration.y), 1);
         }
 
         var forces_count = object.forces.length;
 
         for (var i = 0; i < forces_count; i++) {
             if (object.forces[i] == null)
-            continue;
+                continue;
 
             object.acceleration.x += object.forces[i].x;
             object.acceleration.y += object.forces[i].y;
@@ -107,17 +122,29 @@ function loop() {
 
         ctx.fillStyle = `#fff`;
         ctx.beginPath();
-        ctx.arc(object.position.x, object.position.y, 5, 0, Math.PI * 2, true);
+        ctx.arc(object.position.x / 10, object.position.y / 10, 5, 0, Math.PI * 2, true);
         ctx.closePath();
         ctx.fill();
 
         document.getElementById(`tick_count`).innerText = `Tick count: ${ticks}`;
 
-        setTimeout(loop, tickrate);
+        timeout = setTimeout(loop, tickrate);
+
+        if (object.forces[object.forces.length - 1] == null)
+            object.forces.pop();
     }
 }
 
-function push() {
+function apply_force(name, x, y, time) {
+    object.forces.push({
+        name: name,
+        x: x,
+        y: y,
+        time: time
+    });
+}
+
+function apply_force_user() {
     object.forces.push({
         name: "f",
         x: push_value * Math.cos(push_angle / 57.3),
