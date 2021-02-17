@@ -125,7 +125,7 @@ function loop() {
         ctx.closePath();
         ctx.fill();
 
-        document.getElementById(`tick_count`).innerText = `Тик ${ticks}`;
+        document.getElementById(`tick_count`).innerText = `Tick ${ticks}`;
 
         timeout = setTimeout(loop, 1000 / tickrate);
 
