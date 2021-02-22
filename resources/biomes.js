@@ -5,7 +5,7 @@ const biomes = [
         "color": "44ff44",
         "scale": 1,
         "height": 3,
-        "altitude": 0.3,
+        "altitude": 0.0,
         "temperature": 0.2,
         "humidity": 0.1,
         "weirdness": 0.0,
@@ -39,9 +39,9 @@ const biomes = [
         "color": "44ff44",
         "scale": 1,
         "height": 4,
-        "altitude": 0.3,
-        "temperature": 0.3,
-        "humidity": 0.3,
+        "altitude": 0.1,
+        "temperature": 0.1,
+        "humidity": 0.4,
         "weirdness": 0.0,
         "default_layer": "#3333cc",
         "layers": [
@@ -73,9 +73,9 @@ const biomes = [
         "color": "44ff44",
         "scale": 1,
         "height": 6,
-        "altitude": 0.3,
-        "temperature": 0.4,
-        "humidity": 0.5,
+        "altitude": 0.2,
+        "temperature": 0.2,
+        "humidity": 0.6,
         "weirdness": 0.2,
         "default_layer": "#3333cc",
         "layers": [
@@ -104,12 +104,12 @@ const biomes = [
     {
         "id": 3,
         "name": "jungle",
-        "color": "44ff44",
+        "color": "77ff44",
         "scale": 1,
         "height": 6,
-        "altitude": 0.3,
+        "altitude": 0.2,
         "temperature": 0.6,
-        "humidity": 1.2,
+        "humidity": 1.0,
         "weirdness": 0.0,
         "default_layer": "#3333cc",
         "layers": [
@@ -122,15 +122,15 @@ const biomes = [
                 "height": -0.5
             },
             {
-                "color": "#44aa33",
+                "color": "#99aa33",
                 "height": 0
             },
             {
-                "color": "#44dd22",
+                "color": "#aadd22",
                 "height": 2
             },
             {
-                "color": "#44ff22",
+                "color": "#ccff22",
                 "height": 4
             }
         ]
@@ -171,7 +171,7 @@ const biomes = [
         "color": "ffff33",
         "scale": 1,
         "height": 10,
-        "altitude": 1.5,
+        "altitude": 1.6,
         "temperature": 0.2,
         "humidity": 0.1,
         "weirdness": 0.0,
@@ -202,7 +202,7 @@ const biomes = [
         "scale": 1,
         "height": 5,
         "altitude": 0.3,
-        "temperature": -0.3,
+        "temperature": -0.6,
         "humidity": 0.3,
         "weirdness": 0.0,
         "default_layer": "#3333cc",
@@ -231,10 +231,10 @@ const biomes = [
         "color": "ff9922",
         "scale": 1,
         "height": 6,
-        "altitude": 0.9,
-        "temperature": 2.0,
+        "altitude": 0.6,
+        "temperature": 1.0,
         "humidity": -0.8,
-        "weirdness": 0.8,
+        "weirdness": 0.9,
         "default_layer": "#3333cc",
         "layers": [
             {
@@ -262,7 +262,7 @@ const biomes = [
         "scale": 1,
         "height": 7,
         "altitude": 0.4,
-        "temperature": -0.3,
+        "temperature": -0.6,
         "humidity": 0.4,
         "weirdness": 0.8,
         "default_layer": "#3333cc",
@@ -291,7 +291,7 @@ const biomes = [
         "color": "#3333ff",
         "scale": 1,
         "height": -6,
-        "altitude": -1.0,
+        "altitude": -0.8,
         "temperature": 0.0,
         "humidity": 0.0,
         "weirdness": 0.0,

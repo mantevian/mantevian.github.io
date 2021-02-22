@@ -1,7 +1,5 @@
 function get_element_value_or_default(id, def) {
-    if (document.getElementById(id).value)
-        return document.getElementById(id).value;
-    else return def;
+    return document.getElementById(id).value || def;
 }
 
 var canvas, ctx, ground_level, g, push_value, push_angle, timer, ticks, tickrate, timeout, friction;
@@ -68,7 +66,7 @@ function loop() {
             object.velocity.y = 0;
             object.acceleration.y = 0;
             object.velocity.y = -Math.sqrt(object.energy.kinetic.y / object.mass);
-            apply_force(`fr`, -Math.sign(object.velocity.x) * object.mass * g * friction, 0, 1)
+            apply_force(`fr`, -Math.sign(object.velocity.x) * object.mass * g * friction, 0, 1);
         }
 
         var forces_count = object.forces.length;

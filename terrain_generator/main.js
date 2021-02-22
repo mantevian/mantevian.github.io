@@ -7,9 +7,7 @@ function map(num, start_in, end_in, start_out, end_out) {
 }
 
 function get_element_value_or_default(id, def) {
-    if (document.getElementById(id).value)
-        return document.getElementById(id).value;
-    else return def;
+    return document.getElementById(id).value || def;
 }
 
 var scale, image_scale, altitude_scale, temperature_scale, humidity_scale, weirdness_scale,
@@ -109,6 +107,8 @@ function generate() {
             }
         }
 
+        const sqr = (x) => x * x;
+
         var biomeidmap = [];
         for (var i = 0; i < biomemap.length; i++) {
             var altitude_difference = 0;
@@ -121,10 +121,10 @@ function generate() {
             var min_weirdness_difference = 65535;
 
             for (var b = 0; b < biomes.length; b++) {
-                altitude_difference = Math.abs(biomemap[i][0] - biomes[b].altitude);
-                temperature_difference = Math.abs(biomemap[i][1] - biomes[b].temperature);
-                humidity_difference = Math.abs(biomemap[i][2] - biomes[b].humidity);
-                weirdness_difference = Math.abs(biomemap[i][3] - biomes[b].weirdness);
+                altitude_difference = sqr(biomemap[i][0] - biomes[b].altitude);
+                temperature_difference = sqr(biomemap[i][1] - biomes[b].temperature);
+                humidity_difference = sqr(biomemap[i][2] - biomes[b].humidity);
+                weirdness_difference = sqr(biomemap[i][3] - biomes[b].weirdness);
 
                 if (temperature_difference + altitude_difference + humidity_difference + weirdness_difference < min_temperature_difference + min_humidity_difference + min_altitude_difference + min_weirdness_difference)
                     biomeidmap[i] = biomes[b].id;
